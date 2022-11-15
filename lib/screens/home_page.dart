@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:imusix/screens/details_page.dart';
 import 'package:imusix/services/api_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/music_data_model.dart';
 
@@ -20,7 +22,15 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _musicData = APIService().musicData();
     APIService().musicData();
-    results = const Results(name: '', image: '', price: 0.0);
+    results = const Results(
+      id: 0,
+      name: '',
+      image: '',
+      price: 0.0,
+      description: '',
+      country: '',
+      genre: '',
+    );
   }
 
   @override
@@ -91,7 +101,20 @@ class _HomePageState extends State<HomePage> {
                         itemCount: snapshot.data?.resultCount,
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
-                              onTap: () async {},
+                              onTap: () async {
+                                SharedPreferences sp =
+                                    await SharedPreferences.getInstance();
+                                setState(() {
+                                  sp.setInt("artistId", index);
+                                });
+                                if (!mounted) return;
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const DetailsPage()),
+                                );
+                              },
                               title: Row(
                                 children: [
                                   SizedBox(
@@ -110,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                                 ],
                               ),
                               trailing: Text(
-                                snapshot.data!.results[index].price.toString(),
+                                "${snapshot.data!.results[index].price} \$",
                                 style: const TextStyle(fontSize: 15),
                               ));
                         }),
