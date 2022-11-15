@@ -19,7 +19,6 @@ class Results {
   final String image;
   final String price;
 
-
   const Results({
     required this.name,
     required this.image,
