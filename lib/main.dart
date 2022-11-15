@@ -13,18 +13,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'iMusix',
-      theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xffffffff),
-        // primarySwatch: Colors.purple,
-      ),
-      home: AnimatedSplashScreen(
-          duration: 1500,
-          splash: 'assets/logo/logo-01.png',
-          splashIconSize: 150,
-          nextScreen: const HomePage(),
-          splashTransition: SplashTransition.fadeTransition,
-          backgroundColor: Colors.white));
+        debugShowCheckedModeBanner: false,
+        title: 'iMusix',
+        theme: ThemeData(
+          scaffoldBackgroundColor: const Color(0xffffffff),
+          // primarySwatch: Colors.purple,
+        ),
+        home: AnimatedSplashScreen(
+            duration: 1500,
+            splash: 'assets/logo/logo-01.png',
+            splashIconSize: 150,
+            nextScreen: const HomePage(),
+            splashTransition: SplashTransition.rotationTransition,
+            backgroundColor: Colors.white));
   }
 }

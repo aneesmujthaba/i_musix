@@ -14,10 +14,9 @@ class APIService {
     final response = await http.get(
       url,
     );
-    print('ddd' + response.statusCode.toString());
+    print('Response ' + response.statusCode.toString());
     if (response.statusCode == 200) {
       print(url);
-      print(MusicDataResponseModel.fromJson(json.decode(response.body)));
       return MusicDataResponseModel.fromJson(json.decode(response.body));
     } else {
       throw CustomError(apiResponseCode: response.statusCode);

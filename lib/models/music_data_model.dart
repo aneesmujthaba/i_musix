@@ -18,7 +18,7 @@ class MusicDataResponseModel {
 class Results {
   final String name;
   final String image;
-  final String price;
+  final double price;
 
   const Results({
     required this.name,
@@ -27,13 +27,13 @@ class Results {
   });
 
   factory Results.fromJson(Map<String, dynamic> json) => Results(
-        name: json["artistNname"],
+        name: json["artistName"] ?? "",
         image: json["artworkUrl100"],
-        price: json["collectionPrice"],
+        price: json["collectionPrice"] ?? 0.0,
       );
 
   Map<String, dynamic> toJson() => {
-        "artistNname": name,
+        "artistName": name,
         "artworkUrl100": image,
         "collectionPrice": price,
       };

@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:imusix/services/api_service.dart';
 
@@ -21,7 +20,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _musicData = APIService().musicData();
     APIService().musicData();
-    results = const Results(name: '', image: '', price: '');
+    results = const Results(name: '', image: '', price: 0.0);
   }
 
   @override
@@ -65,29 +64,59 @@ class _HomePageState extends State<HomePage> {
           future: _musicData,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return ListView.builder(
-                  itemCount: snapshot.data?.resultCount,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                        onTap: () async {},
-                        title: Row(
-                          children: [
-                            Text(
-                              snapshot.data!.results[index].name,
-                              style: TextStyle(fontSize: 15),
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            CachedNetworkImage(
-                                imageUrl: snapshot.data!.results[index].image)
-                          ],
-                        ),
-                        trailing: Text(
-                          snapshot.data!.results[index].price,
-                          style: TextStyle(fontSize: 15),
-                        ));
-                  });
+              return Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(2),
+                    color: Color(0xffd948dd),
+                    child: const ListTile(
+                      title: Text(
+                        'Artist Name',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white),
+                      ),
+                      trailing: Text(
+                        'Price',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: snapshot.data?.resultCount,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(
+                              onTap: () async {},
+                              title: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 100,
+                                    child: Text(
+                                      snapshot.data!.results[index].name,
+                                      style: const TextStyle(fontSize: 15),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 30,
+                                  ),
+                                  CachedNetworkImage(
+                                      imageUrl:
+                                          snapshot.data!.results[index].image)
+                                ],
+                              ),
+                              trailing: Text(
+                                snapshot.data!.results[index].price.toString(),
+                                style: const TextStyle(fontSize: 15),
+                              ));
+                        }),
+                  ),
+                ],
+              );
             } else {
               return Container();
             }
